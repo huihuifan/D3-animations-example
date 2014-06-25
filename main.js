@@ -1,6 +1,6 @@
 //Angela Fan
 
-var file_list = ["time1.csv", "time2.csv"];
+var file_list = ["time1.csv", "time2.csv", "time3.csv", "time4.csv", "time5.csv"];
 
 
 var margins = [50, 50, 50, 50],
@@ -76,8 +76,14 @@ d3.csv("time1.csv", function(error, data) {
 
 	var num_files = file_list.length;
 
-	for (var i = 0; i < num_files; i ++) {	
-		setTimeout(update(file_list[i]), 2000);
+	for (i = 0; i < num_files; ++i) {
+  		setTimeout(setDelay(i), 1000);
+	}
+
+	function setDelay(i) {
+	  setTimeout(function(){
+	    update(file_list[i]);
+	  }, 1000);
 	}
 
 });
