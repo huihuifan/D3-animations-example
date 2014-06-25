@@ -76,15 +76,25 @@ d3.csv("time1.csv", function(error, data) {
 
 	var num_files = file_list.length;
 
-	for (i = 0; i < num_files; ++i) {
-  		setTimeout(setDelay(i), 1000);
+	// for (i = 0; i < num_files; ++i) {
+ //  		setTimeout(setDelay(i), 1000);
+	// }
+
+	// function setDelay(i) {
+	//   setTimeout(function(){
+	//     update(file_list[i]);
+	//   }, 1000);
+	// }
+
+	function setDelay() {
+	    var file = file_list.shift();
+	    if (file) {
+	        update(file);
+	        setTimeout(setDelay, 2000);
+	    }
 	}
 
-	function setDelay(i) {
-	  setTimeout(function(){
-	    update(file_list[i]);
-	  }, 1000);
-	}
+	setDelay();
 
 });
 
