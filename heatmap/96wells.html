@@ -1,0 +1,194 @@
+<html>
+    <head>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+    <style>
+        body {
+          font: 10px sans-serif;
+        }
+
+    </style>
+    </head>
+    <body>
+    <button type="button" id="decrement">Decrement</button>
+    <button type="button" id="increment">Increment</button>
+
+    <div id='heatmap'></div>
+    
+    <script type="text/javascript">
+
+    var data = [
+        {score: 0.5, row: 0, col: 0},
+        {score: 0.7, row: 0, col: 1},
+        {score: 0.2, row: 0, col: 2},
+        {score: 0.7, row: 0, col: 3},
+        {score: 0.1, row: 0, col: 4},
+        {score: 0.7, row: 0, col: 5},
+        {score: 0.2, row: 0, col: 6},
+        {score: 0.3, row: 0, col: 7},
+        {score: 0.6, row: 0, col: 8},
+        {score: 0.8, row: 0, col: 9},
+        {score: 0.7, row: 0, col: 10},
+        {score: 0.7, row: 0, col: 11},
+
+
+        {score: 0.2, row: 1, col: 0},
+        {score: 0.4, row: 1, col: 1},
+        {score: 0.4, row: 1, col: 2},
+        {score: 0.1, row: 1, col: 3},
+        {score: 0.01, row: 1, col: 4},
+        {score: 0.4, row: 1, col: 5},
+        {score: 0.4, row: 1, col: 6},
+        {score: 0.3, row: 1, col: 7},
+        {score: 0.5, row: 1, col: 8},
+        {score: 0.6, row: 1, col: 9},
+        {score: 0.6, row: 1, col: 10},
+        {score: 0.8, row: 1, col: 11},
+
+        {score: 0.4, row: 2, col: 0},
+        {score: 0.41, row: 2, col: 1},
+        {score: 0.09, row: 2, col: 2},
+        {score: 0.6, row: 2, col: 3},
+        {score: 0.04, row: 2, col: 4},
+        {score: 0.04, row: 2, col: 5},
+        {score: 0.4, row: 2, col: 6},
+        {score: 0.001, row: 2, col: 7},
+        {score: 0.4, row: 2, col: 8},
+        {score: 0.45, row: 2, col: 9},
+        {score: 0.2, row: 2, col: 10},
+        {score: 0.1, row: 2, col: 11},
+
+        {score: 0.15, row: 3, col: 0},
+        {score: 0.4, row: 3, col: 1},
+        {score: 0.8, row: 3, col: 2},
+        {score: 0.99, row: 3, col: 3},
+        {score: 0.5, row: 3, col: 4},
+        {score: 0.04, row: 3, col: 5},
+        {score: 0.4, row: 3, col: 6},
+        {score: 0.4, row: 3, col: 7},
+        {score: 0.19, row: 3, col: 8},
+        {score: 0.48, row: 3, col: 9},
+        {score: 0.44, row: 3, col: 10},
+        {score: 0.4, row: 3, col: 11},
+
+        {score: 0.04, row: 4, col: 0},
+        {score: 0.14, row: 4, col: 1},
+        {score: 0.99, row: 4, col: 2},
+        {score: 0.14, row: 4, col: 3},
+        {score: 0.94, row: 4, col: 4},
+        {score: 0.24, row: 4, col: 5},
+        {score: 0.34, row: 4, col: 6},
+        {score: 0.44, row: 4, col: 7},
+        {score: 0.54, row: 4, col: 8},
+        {score: 0.4, row: 4, col: 9},
+        {score: 0.84, row: 4, col: 10},
+        {score: 0.4, row: 4, col: 11},
+
+        {score: 0.004, row: 5, col: 0},
+        {score: 0.14, row: 5, col: 1},
+        {score: 0.94, row: 5, col: 2},
+        {score: 0.64, row: 5, col: 3},
+        {score: 0.40, row: 5, col: 4},
+        {score: 0.4, row: 5, col: 5},
+        {score: 0.454, row: 5, col: 6},
+        {score: 0.004, row: 5, col: 7},
+        {score: 0.001, row: 5, col: 8},
+        {score: 0.4, row: 5, col: 9},
+        {score: 0.994, row: 5, col: 10},
+        {score: 0.4, row: 5, col: 11},
+
+        {score: 0.1, row: 6, col: 0},
+        {score: 0.2, row: 6, col: 1},
+        {score: 0.467, row: 6, col: 2},
+        {score: 0.4, row: 6, col: 3},
+        {score: 0.49, row: 6, col: 4},
+        {score: 0.84, row: 6, col: 5},
+        {score: 0.4, row: 6, col: 6},
+        {score: 0.24, row: 6, col: 7},
+        {score: 0.44, row: 6, col: 8},
+        {score: 0.4, row: 6, col: 9},
+        {score: 0.74, row: 6, col: 10},
+        {score: 0.04, row: 6, col: 11},
+
+        {score: 0.42, row: 7, col: 0},
+        {score: 0.14, row: 7, col: 1},
+        {score: 0.4, row: 7, col: 2},
+        {score: 0.4325, row: 7, col: 3},
+        {score: 0.54, row: 7, col: 4},
+        {score: 0.24, row: 7, col: 5},
+        {score: 0.34, row: 7, col: 6},
+        {score: 0.04, row: 7, col: 7},
+        {score: 0.94, row: 7, col: 8},
+        {score: 0.994, row: 7, col: 9},
+        {score: 0.14, row: 7, col: 10},
+        {score: 0.04, row: 7, col: 11}
+
+    ];
+
+    //height of each row in the heatmap
+    //width of each column in the heatmap
+    var gridSize = 50,
+        h = gridSize,
+        w = gridSize,
+        rectPadding = 60;
+
+    var colorLow = 'green', colorMed = 'yellow', colorHigh = 'red';
+
+    var margin = {top: 20, right: 80, bottom: 30, left: 50},
+        width = 1640 - margin.left - margin.right,
+        height = 1640 - margin.top - margin.bottom;
+
+    var colorScale = d3.scale.linear()
+         .domain([-1, 0, 1])
+         .range([colorLow, colorMed, colorHigh]);
+
+    var svg = d3.select("#heatmap").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var heatMap = svg.selectAll(".heatmap")
+        .data(data, function(d) { return d.col + ':' + d.row; })
+      .enter().append("svg:rect")
+        .attr("x", function(d) { return d.row * w; })
+        .attr("y", function(d) { return d.col * h; })
+        .attr("width", function(d) { return w; })
+        .attr("height", function(d) { return h; })
+        .style("fill", function(d) { return colorScale(d.score); });
+
+    var button = d3.select("#decrement")
+        .on("click", function(d) {
+            svg.selectAll("rect").remove();
+
+            var heatMap = svg.selectAll(".heatmap")
+                .data(data, function(d) { return d.col + ':' + d.row; })
+              .enter().append("svg:rect")
+                .attr("x", function(d) { return d.row * w; })
+                .attr("y", function(d) { return d.col * h; })
+                .attr("width", function(d) { return w; })
+                .attr("height", function(d) { return h; })
+                .style("fill", function(d) { return colorScale(d.score-.5); });
+
+        })
+
+    var button2 = d3.select("#increment")
+        .on("click", function(d) {
+            svg.selectAll("rect").remove();
+
+            var heatMap = svg.selectAll(".heatmap")
+                .data(data, function(d) { return d.col + ':' + d.row; })
+              .enter().append("svg:rect")
+                .attr("x", function(d) { return d.row * w; })
+                .attr("y", function(d) { return d.col * h; })
+                .attr("width", function(d) { return w; })
+                .attr("height", function(d) { return h; })
+                .style("fill", function(d) { return colorScale(d.score+.5); });
+
+        })
+
+
+   </script>
+   </body>
+</html>
+
