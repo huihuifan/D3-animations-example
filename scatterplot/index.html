@@ -17,36 +17,84 @@
     fill: none;
 }
 
-circle {
-    fill: steelblue;
+/*default tooltip styles*/
+.d3-tip {
+  z-index: 101;
+  line-height: 1;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 1px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.d3-tip.n:after {
+/*content: "\25BC";*/
+margin: -1px 0 0 0;
+top: 100%;
+left: 0;
+text-align: center;
+}
+
+.d3-tip.s:after {
+margin: 0 0 1px 0;
+top: -8px;
+left: 0;
+text-align: center;
+}
+
+.d3-tip.e:after {
+  margin: -4px 0 0 0;
+  top: 50%;
+  left: -8px;
+}
+
+.d3-tip.w:after {
+  margin: -4px 0 0 -1px;
+  top: 50%;
+  left: 100%;
 }
 
 </style>
-        <script type="text/javascript" src="http://mbostock.github.com/d3/d3.v2.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
       </head>
       <body>
         <script>
 
-        d3.json("scatterplot_sample_data.csv", function(data, error) {
+        d3.csv("scatterplot_sample_data.csv", function(error, data) {
             data.forEach(function(d) {
               d.val1 = +d.val1;
               d.val2 = +d.val2;
-              d.size = +d.size;
+              d.size = +d.sizing;
               d.group = +d.group; 
             });
 
+            var graph_tip = d3.tip()
+              .attr("class", "d3-tip")
+              .offset([0,0]);
 
-            var margin = {top: 20, right: 15, bottom: 60, left: 60}
-              , width = 960 - margin.left - margin.right
-              , height = 500 - margin.top - margin.bottom;
+
+            var margin = {top: 20, right: 15, bottom: 60, left: 60}, 
+                width = 960 - margin.left - margin.right, 
+                height = 500 - margin.top - margin.bottom;
+
+            //console.log(data)
             
             var x = d3.scale.linear()
-                      .domain(d3.extent(data, function(d) { return d.val1; })
-                      .range([ 0, width ]);
+                      .domain(d3.extent(data, function(d) { return d.val1; }))
+                      .range([0, width]);
             
             var y = d3.scale.linear()
                     .domain(d3.extent(data, function(d) { return d.val2; }))
-                    .range([ height, 0 ]);
+                    .range([height, 0]);
+
+            var node_size_scale = d3.scale.linear()
+                    .domain(d3.extent(data, function(d) { return d.size; }))
+                    .range([5, 15]);
+
+            var node_color_scale = d3.scale.category10();
          
             var chart = d3.select('body')
               .append('svg:svg')
@@ -58,7 +106,9 @@ circle {
               .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
               .attr('width', width)
               .attr('height', height)
-              .attr('class', 'main')   
+              .attr('class', 'main') 
+
+            main.call(graph_tip);  
                   
             // draw the x axis
             var xAxis = d3.svg.axis()
@@ -87,8 +137,16 @@ circle {
               .enter().append("svg:circle")
                   .attr("cx", function (d,i) { return x(d.val1); } )
                   .attr("cy", function (d) { return y(d.val2); } )
-                  .attr("r", 8);
-        });
+                  .attr("r", function(d) { return node_size_scale(d.size); })
+                  .attr("fill", function(d) {return node_color_scale(d.group); })
+                  .on("mouseover", function(d) {
+                      graph_tip.html(d.info);
+                      graph_tip.show(d);
+                  })
+                  .on("mouseout", function(d) {
+                      graph_tip.hide(d);
+                  });
+          });
 
         </script>
       </body>
