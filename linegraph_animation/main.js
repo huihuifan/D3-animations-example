@@ -37,8 +37,34 @@ d3.csv("ec_brd4.csv", function(error, data) {
 		d.signal = +d.signal1;
 	});
 	
+	var top_values = [];
+	//var location_values = [];
+
+	for (var i = 1; i < number; i++) {
+
+		var current_column = "signal" + i;
+
+		top_values.push(+d3.max(data, function(d) {
+			//console.log(d[current_column])
+			return +d[current_column];
+		}))
+
+		//console.log(top_values)
+
+	}
+
+	y_domain_end = d3.max(top_values);
+
+	//console.log(y_domain_end)
+
+	//console.log(location_values)
+
+	//console.log(x_domain_end)
+
 	x.domain(d3.extent(data, function(d) {return d.location}));
-	y.domain(d3.extent(data, function(d) {return d.signal}));
+	// y.domain(d3.extent(data, function(d) {return d.signal}));
+
+	y.domain([0, y_domain_end]);
 
 	svg.append("g")
 		.attr("class", "x axis")
@@ -87,9 +113,12 @@ function update(number){
 		d.location = +d.location;
 		d.signal = +d[col_name];
 	});
+
   	
   	x.domain(d3.extent(data, function(d) {return d.location}));
-	y.domain(d3.extent(data, function(d) {return d.signal}));
+	y.domain([0, y_domain_end]);
+
+	//console.log(y_domain_end)
 
 	svg.select(".x").call(xAxis);
 	svg.select(".y").call(yAxis);
