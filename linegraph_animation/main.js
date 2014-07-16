@@ -31,6 +31,12 @@ var line = d3.svg.line()
 	.x(function(d) { return x(d.location) })
 	.y(function(d) { return y(d.signal) });
 
+var area = d3.svg.area()
+    .x(function(d) { return x(d.location); })
+    .y0(height)
+    .y1(function(d) { return y(d.signal); });
+
+
 d3.csv("ec_brd4.csv", function(error, data) {
 	data.forEach(function(d) {
 		d.location = +d.location;
@@ -87,16 +93,25 @@ d3.csv("ec_brd4.csv", function(error, data) {
 		.style("text-anchor", "end")
 		.text("Signal");
 
+	// svg.append("text")
+	// 	.attr("y", 0)
+	// 	.attr("x", 0)
+	// 	.attr("class", "name_text")
+	// 	.text("Signal 1")
+
+	//     	.x(function(d) { return x(d.location) })
+	// .y(function(d) { return y(d.signal) });
+
 	svg.append("path")
 		.datum(data)
-		.attr("class", "line")
-		.attr("d", line);
+		.attr("class", "area")
+		.attr("d", area);
 
 	function setDelay() {
 		number = number - 1;
 		if (number) {
-			update(number)
-			setTimeout(setDelay, 3000);
+			update(4-number)
+			setTimeout(setDelay, 6000);
 		}
 	}
 
@@ -108,12 +123,33 @@ function update(number){
 
 	var col_name = "signal" + number;
 
+	var label;
+
+	if (col_name == "signal3") {
+		label = "+TNF +JQ1";
+	}
+	else if (col_name == "signal2") {
+		label = "+TNF";
+	}
+	else {
+		label = "Control";
+	}
+
+	d3.selectAll(".name_text").remove()
+
   	d3.csv("ec_brd4.csv", function(error, data) {
   		data.forEach(function(d) {
 		d.location = +d.location;
 		d.signal = +d[col_name];
 	});
 
+	svg.append("text")
+		.attr("y", 0)
+		.attr("x", 500)
+		.attr("class", "name_text")
+		.text(label)
+		.style("font-family", "Arial")
+		.style("font-size", "36px");
   	
   	x.domain(d3.extent(data, function(d) {return d.location}));
 	y.domain([0, y_domain_end]);
@@ -123,15 +159,15 @@ function update(number){
 	svg.select(".x").call(xAxis);
 	svg.select(".y").call(yAxis);
 
-	var selection = svg.selectAll(".line")
+	var selection = svg.selectAll(".area")
 		.datum(data);
 
 	selection
 		.transition()
 		.duration(1000)
-		.attr("d", line)
+		.attr("d", area)
 		.ease("linear")
-		.attr("class", "line");
+		.attr("class", "area");
 
 	});
 

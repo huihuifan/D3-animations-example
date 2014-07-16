@@ -1,16 +1,22 @@
 body {
-  font: 10px sans-serif;
+  font: 16px sans-serif;
 }
 
 .axis path,
 .axis line {
   fill: none;
   stroke: #000;
+  stroke-width: 2px;
   shape-rendering: crispEdges;
 }
 
 .line {
-  fill: none;
+  fill: blue;
   stroke: black;
   stroke-width: 1.5px;
+}
+
+.area {
+	fill: #cb181d;
+	stroke: #a50f15;
 }
