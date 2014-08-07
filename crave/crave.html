@@ -12,16 +12,17 @@ body {
 
 </style>
 <body>
-  <form>
-    <input type="checkbox" name="file_pick" value="Ref" checked>Reference<br>
-    <input type="checkbox" name="file_pick" value="A">A<br>
-    <input type="checkbox" name="file_pick" value="B">B<br>
-    <input type="checkbox" name="file_pick" value="C">C<br> 
+  <form id="data_form">
+    <input type="checkbox" name="file_pick" value="Ref" checked disabled>Reference<br>
+    <input type="checkbox" name="file_pick" value="A" id="A">A<br>
+    <input type="checkbox" name="file_pick" value="B" id="B">B<br>
+    <input type="checkbox" name="file_pick" value="C" id="C">C<br> 
   </form>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
-var width = 1100,
+var width = 1250,
     height = 1100,
     radius = Math.min(width, height) / 2;
 
@@ -39,31 +40,72 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-d3.csv("bed_file.csv", function(error, data) {
-
-  data.forEach(function(d) {
-    d.start = +d.start;
-    d.overlap = +d.overlap;
+d3.selectAll("#data_form")
+  .on("click", function(d) {
+    console.log("here")
+    draw()
   });
 
-  //console.log(pie(data))
+function draw() {
 
-  var g = svg.selectAll(".arc")
-      .data(pie(data))
-    .enter().append("g")
-      .attr("class", "arc");
+  var num_checked = $('#data_form :checkbox:checked').length;
 
-  g.append("path")
-      .attr("d", arc)
-      .style("fill", function(d) {
-        if (d.data.overlap == 1) {
-          return "green";
-        }
-        else {
-          return "white";
-        }
+  if (num_checked > 0) {
+
+    var all_values = []
+
+    $('#data_form :checked').each(function() {
+      all_values.push($(this).val());
+    });
+
+    d3.csv("bed_file.csv", function(error, data) {
+
+      data.forEach(function(d) {
+        d.start = +d.start;
+        d.overlap = +d.overlap;
+        d.A = +d.A;
+        d.B = +d.B;
+        d.C = +d.C;
       });
 
-});
+      var g = svg.selectAll(".arc")
+          .data(pie(data))
+        .enter().append("g")
+          .attr("class", "arc");
+
+      g.append("path")
+          .attr("d", arc)
+          .style("fill", function(d) {
+            //console.log("here")
+            if (d.data.overlap == 1) {
+              return "green";
+            }
+            else {
+              return "white";
+            }
+          });
+
+      for (var i = 1; i < num_checked; i++) {
+
+        var inner_arc = d3.svg.arc()
+          .outerRadius(radius - (i*100) - 10)
+          .innerRadius(radius - (i*100) - 70)
+
+        g.append("path")
+          .attr("d", inner_arc)
+          .style("fill", function(d) {
+            if (d.data[all_values[i]] == 1) {
+              return "green";
+            }
+            else {
+              return "white";
+            }
+          })
+      }
+
+    });
+
+  }
+}
 
 </script>
