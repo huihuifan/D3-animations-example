@@ -14,10 +14,10 @@ body {
 <body>
   <button type="button" class="submit_button">Submit</button>
   <form id="data_form">
-    <input type="checkbox" name="file_pick" value="Ref" checked disabled>Reference<br>
     <input type="checkbox" name="file_pick" value="A" id="A">A<br>
     <input type="checkbox" name="file_pick" value="B" id="B">B<br>
-    <input type="checkbox" name="file_pick" value="C" id="C">C<br> 
+    <input type="checkbox" name="file_pick" value="C" id="C">C<br>
+    <input type="checkbox" name="file_pick" value="D" id="D">D<br> 
   </form>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -52,7 +52,7 @@ d3.select(".submit_button")
 
 function draw(num_checked) {
 
-  console.log(num_checked)
+  //console.log(num_checked)
 
   d3.selectAll(".arc").remove();
   d3.selectAll(".wedge").remove();
