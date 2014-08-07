@@ -12,6 +12,7 @@ body {
 
 </style>
 <body>
+  <button type="button" class="submit_button">Submit</button>
   <form id="data_form">
     <input type="checkbox" name="file_pick" value="Ref" checked disabled>Reference<br>
     <input type="checkbox" name="file_pick" value="A" id="A">A<br>
@@ -40,17 +41,25 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-d3.selectAll("#data_form")
-  .on("click", function(d) {
-    console.log("here")
-    draw()
+d3.select(".submit_button")
+  .on("click", function() {
+
+    var num_checked = $('#data_form :checkbox:checked').length;
+
+    //console.log("here")
+    return draw(num_checked);
   });
 
-function draw() {
+function draw(num_checked) {
 
-  var num_checked = $('#data_form :checkbox:checked').length;
+  console.log(num_checked)
+
+  d3.selectAll(".arc").remove();
+  d3.selectAll(".wedge").remove();
 
   if (num_checked > 0) {
+
+    //console.log(num_checked)
 
     var all_values = []
 
@@ -75,6 +84,7 @@ function draw() {
 
       g.append("path")
           .attr("d", arc)
+          .attr("class", "wedge")
           .style("fill", function(d) {
             //console.log("here")
             if (d.data.overlap == 1) {
@@ -93,6 +103,7 @@ function draw() {
 
         g.append("path")
           .attr("d", inner_arc)
+          .attr("clas", "wedge")
           .style("fill", function(d) {
             if (d.data[all_values[i]] == 1) {
               return "green";
