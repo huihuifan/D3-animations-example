@@ -41,8 +41,14 @@ body {
   <div id="ac-wrapper">
     <div id="popup">
       <center>
-        <h2>Popup Content Here</h2>
+        <h2>Please select a reference, then click submit.</h2>
+
           <input type="submit" name="submit" value="Submit"/>
+          
+          <select id="reference_selection" style="position:relative; top:10px; left:25px"> 
+     
+          </select> 
+
       </center>
     </div>
   </div>
@@ -66,7 +72,28 @@ function PopUp(){
 }
 
 $(document).ready(function(){
-  //PopUp();
+    d3.csv("bed_file.csv", function(error, data) {
+
+      var column_names;
+
+      data.forEach(function(d) {
+        column_names = Object.keys(d)
+      });
+
+      column_names = column_names.splice(4)
+
+      console.log(column_names)
+
+
+    function add(){
+
+      var str="<option>Al-Tobah</option>"
+      $("#surah_selection").append(str);
+    
+    }
+
+  })
+
 });
 
 var width = 1250,
@@ -121,7 +148,17 @@ function draw(num_checked) {
         d.A = +d.A;
         d.B = +d.B;
         d.C = +d.C;
+
+        console.log(Object.keys(d))
       });
+
+
+      function add(){
+
+        var str="<option>Al-Tobah</option>"
+        $("#surah_selection").append(str);
+      
+      }
 
       var g = svg.selectAll(".arc")
           .data(pie(data))
