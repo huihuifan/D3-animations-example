@@ -176,8 +176,8 @@ var width = 1250,
     radius = Math.min(width, height) / 2.3;
 
 var arc = d3.svg.arc()
-    .outerRadius(radius - 10)
-    .innerRadius(radius - 70);
+    .outerRadius(radius - 20)
+    .innerRadius(radius - 80);
 
 var degree = Math.PI/180; 
 
@@ -191,7 +191,7 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
   .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    .attr("transform", "translate(" + width / 2 + "," + (height / 2 + 25) + ")");
 
 d3.select("#submit_button")
   .on("click", function() {
@@ -234,7 +234,7 @@ function draw(num_checked) {
         //console.log(Object.keys(d))
       });
 
-      console.log(data)
+      //console.log(data)
 
       d3.csv("chromo.csv", function(chromosome_data) {
         chromosome_data.forEach(function(d) {
@@ -242,16 +242,16 @@ function draw(num_checked) {
         });
 
         var chromo_arc = d3.svg.arc()
-          .outerRadius(radius + 20)
-          .innerRadius(radius + 10);
+          .outerRadius(radius + 10)
+          .innerRadius(radius);
 
         var chromo = svg.selectAll(".chromo_arc")
-          .data(pie(chromosoe_data))
+          .data(pie(chromosome_data))
           .enter().append("g")
           .attr("class", "chromo_arc");
 
         chromo.append("path")
-          .attr("d", arc)
+          .attr("d", chromo_arc)
           .style("fill", "black")
 
       })
@@ -277,8 +277,8 @@ function draw(num_checked) {
       for (var i = 1; i < num_checked; i++) {
 
         var inner_arc = d3.svg.arc()
-          .outerRadius(radius - (i*100) - 10)
-          .innerRadius(radius - (i*100) - 70)
+          .outerRadius(radius - (i*100) - 20)
+          .innerRadius(radius - (i*100) - 80)
 
         g.append("path")
           .attr("d", inner_arc)
