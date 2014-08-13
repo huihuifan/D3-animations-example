@@ -42,6 +42,8 @@ body {
 <body>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>  
   <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
 
   <div id="ac-wrapper">
     <div id="popup">
@@ -92,11 +94,38 @@ $(document).ready(function(){
       //console.log(column_names)
 
 
-      for (var i = 0; i < column_names.length; i++) {
-        var str = "<li role='presentation'><a role='menuitem' tabindex='-1' href='#'>" + column_names[i] + "</a></li>";
+// var list = document.getElementById("projectSelectorDropdown"); 
+//         for (var i = 0; i < rows; i++){                
+//             var opt = table.getValue(i, 0);  
+//             var li = document.createElement("li");
+//             var link = document.createElement("a");             
+//             var text = document.createTextNode(opt);
+//             link.appendChild(text);
+//             link.href = "#";
+//             li.appendChild(link);
+//             list.appendChild(li);
+//           }
 
-        $("#reference_selection").append(str);
+      var dropdown = document.getElementById("reference_selection");
+
+      for (var i = 0; i < column_names.length; i++) {
+
+        var opt = column_names[i];
+        var li = document.createElement("li");
+        var link = document.createElement("a");
+        var text = document.createTextNode(opt);
+        link.appendChild(text);
+        link.href = "#";
+        li.appendChild(link);
+        dropdown.appendChild(li);
+
       }
+
+      // for (var i = 0; i < column_names.length; i++) {
+      //   var str = "<li role='presentation'><a role='menuitem' tabindex='-1' href='#'>" + column_names[i] + "</a></li>";
+
+      //   $("#reference_selection").append(str);
+      // }
 
   })
 
