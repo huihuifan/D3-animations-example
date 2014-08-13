@@ -14,6 +14,44 @@ body {
   stroke: gray;
 }
 
+.d3-tip {
+  z-index: 101;
+  line-height: 1;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 1px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.d3-tip.n:after {
+/*content: "\25BC";*/
+margin: -1px 0 0 0;
+top: 100%;
+left: 0;
+text-align: center;
+}
+
+.d3-tip.s:after {
+margin: 0 0 1px 0;
+top: -8px;
+left: 0;
+text-align: center;
+}
+
+.d3-tip.e:after {
+  margin: -4px 0 0 0;
+  top: 50%;
+  left: -8px;
+}
+
+.d3-tip.w:after {
+  margin: -4px 0 0 -1px;
+  top: 50%;
+  left: 100%;
+}
+
 #ac-wrapper {
   position: fixed;
   top: 0;
@@ -85,6 +123,7 @@ body {
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>  
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
   <div id="ac-wrapper">
     <div id="popup">
@@ -171,6 +210,8 @@ $(document).ready(function(){
 
 });
 
+tip = d3.tip().attr('class', 'd3-tip');
+
 var width = 1250,
     height = 1100,
     radius = Math.min(width, height) / 2.3;
@@ -192,6 +233,8 @@ var svg = d3.select("body").append("svg")
     .attr("height", height)
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + (height / 2 + 25) + ")");
+
+svg.call(tip);
 
 d3.select("#submit_button")
   .on("click", function() {
@@ -254,7 +297,14 @@ function draw(num_checked) {
           .attr("d", chromo_arc)
           .style("fill", "black")
           .attr("stroke", "white")
-          .attr("stroke-width", "2px");
+          .attr("stroke-width", "2px")
+          .on("mouseover", function(d) {
+            tip.html(d.data.chromosome);
+            tip.show(d);
+          })
+          .on("mouseout", function(d) {
+            tip.hide(d);
+          });
 
         chromo.append("text")
           .attr("transform", function(d) {
@@ -312,6 +362,13 @@ function draw(num_checked) {
             else {
               return "white";
             }
+          })
+          .on("mouseover", function(d) {
+            tip.html("Start: " + d.data.start + "<br>End: " + d.data.end + "<br>Chromosome: " + d.data.chromosome);
+            tip.show(d);
+          })
+          .on("mouseout", function(d) {
+            tip.hide(d);
           });
 
       for (var i = 1; i < num_checked; i++) {
@@ -330,6 +387,13 @@ function draw(num_checked) {
             else {
               return "white";
             }
+          })
+          .on("mouseover", function(d) {
+            tip.html("Start: " + d.data.start + "<br>End: " + d.data.end + "<br>Chromosome: " + d.data.chromosome);
+            tip.show(d);
+          })
+          .on("mouseout", function(d) {
+            tip.hide(d);
           });
  
       }
