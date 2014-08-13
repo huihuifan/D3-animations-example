@@ -37,6 +37,10 @@ body {
 
 </style>
 <body>
+  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>  
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
   <div id="ac-wrapper">
     <div id="popup">
@@ -45,7 +49,14 @@ body {
 
           <input type="submit" name="submit" value="Submit"/>
           
-          <select id="reference_selection" style="position:relative; top:10px; left:25px"> 
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              Select Dataset <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" id="reference_selection">
+            </ul>
+          </div>
+
      
           </select> 
 
@@ -54,7 +65,7 @@ body {
   </div>
 
   <div id="page_content">
-    <button type="button" class="submit_button">Submit</button>
+    <button type="button" class="btn btn-default" id="submit_button">Default</button>
     <form id="data_form">
       <input type="checkbox" name="file_pick" value="A" id="A">A<br>
       <input type="checkbox" name="file_pick" value="B" id="B">B<br>
@@ -63,8 +74,6 @@ body {
     </form>
   </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
-<script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
 function PopUp(){
@@ -82,10 +91,10 @@ $(document).ready(function(){
 
       column_names = column_names.splice(4)
 
-      console.log(column_names)
+      //console.log(column_names)
 
       for (var i = 0; i < column_names.length; i++) {
-        var str = "<option>" + column_names[i] + "</option>";
+        var str = "<li><a href='#'>" + column_names[i] + "</a></li>";
 
         $("#reference_selection").append(str);
       }
@@ -112,7 +121,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-d3.select(".submit_button")
+d3.select("#submit_button")
   .on("click", function() {
 
     var num_checked = $('#data_form :checkbox:checked').length;
