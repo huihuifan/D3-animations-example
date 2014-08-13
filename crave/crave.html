@@ -91,7 +91,6 @@ text-align: center;
   left: 20px;
 }
 
-
 #page_title {
   margin: 0px auto 0px auto;
   line-height: 50px;
@@ -112,10 +111,17 @@ text-align: center;
   left: 0; 
 }
 
+#return_button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+
 </style>
 
 <div id="header">
   <div id="page_title"></div>
+  <button type="button" class="btn btn-default btn-sm" id="return_button">Return to reference selection</button>
 </div>
 
 
@@ -145,7 +151,7 @@ text-align: center;
 
   <div id="page_content">
     <button type="button" class="btn btn-default btn-sm" id="submit_button">Submit</button>
-    
+
     <form id="data_form">
     </form>
  
@@ -160,6 +166,9 @@ function PopUp(){
 var column_names;
 
 $(document).ready(function(){
+
+    $("#return_button").attr("visibility", "hidden");
+
     d3.csv("bed_file.csv", function(error, data) {
 
       data.forEach(function(d) {
