@@ -508,11 +508,12 @@ function draw(num_checked) {
 
         //console.log(num_checked)
 
-        d3.selectAll(".label_text").remove();
+        //d3.selectAll(".label_text").remove();
 
         g.append("text")
           .attr("class", "label_text")
           .text(function() {
+            console.log(all_values[i])
             return all_values[i]
           })
           .attr("x", -63)
