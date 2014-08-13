@@ -122,7 +122,7 @@ $(document).ready(function(){
 
       for (var i = 0; i < column_names.length; i++) {
         if (column_names[i] == selected_Text) {
-          column_names = column_names.splice(i+1,column_names.length-i);
+          column_names.splice(i,1);
         }
       }
 
