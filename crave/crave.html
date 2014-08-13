@@ -6,6 +6,7 @@
 
 
 body {
+  margin-top: 0px;
   font: 10px sans-serif;
 }
 
@@ -52,27 +53,33 @@ body {
   left: 20px;
 }
 
-#page_header {
-  background-color: #a6a6a6;
-  height: 50px;
-  margin: 0px auto 20px auto;
-  border-bottom: 2px black solid;
-}
 
 #page_title {
   margin: 0px auto 0px auto;
   line-height: 50px;
   font-size: 24px;
+  background-color: #a6a6a6;
   text-align: center;
   color: black;
   font-family: Trebuchet, sans-serif;
+  border-bottom: 2px black solid;
+  width: 100%;
+}
+
+#header { 
+  width: 100%;
+  position: fixed; 
+  z-index: 9999; 
+  top: 0; 
+  left: 0; 
 }
 
 </style>
 
-<div id="page_header">
-  <div id="page_title"></div>
+<div id="header">
+  <div id="page_title">Hello</div>
 </div>
+
 
 <body>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>  
