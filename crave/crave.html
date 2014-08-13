@@ -167,7 +167,7 @@ var column_names;
 
 $(document).ready(function(){
 
-    $("#return_button").attr("visibility", "hidden");
+    $('#return_button').hide()
 
     d3.csv("bed_file.csv", function(error, data) {
 
@@ -196,6 +196,8 @@ $(document).ready(function(){
     $(".dropdown-menu li a").click( function() {
 
       var selected_Text = $(this).text();
+
+      $('#return_button').show()
 
       d3.csv("chromo.csv", function(chromosome_data) {
         chromosome_data.forEach(function(d) {
