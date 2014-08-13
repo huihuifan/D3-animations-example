@@ -398,6 +398,16 @@ function draw(num_checked) {
  
       }
 
+      var imgs = svg.selectAll("image").data([0]);
+
+      imgs.enter()
+        .append("svg:image")
+        .attr("xlink:href", "Crave_Logo.jpg")
+        .attr("x", "0")
+        .attr("y", "0")
+        .attr("width", "200")
+        .attr("height", "200");
+
       for (var i = 0; i < num_checked; i++) {
 
         g.append("text")
