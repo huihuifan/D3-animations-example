@@ -235,7 +235,14 @@ $(document).ready(function(){
                   // pythagorean theorem for hypotenuse
                   h = Math.sqrt(x*x + y*y);
 
-              if (x < 0) {
+              
+              if (x < 0 && y < 0) {
+                //console.log("here")
+                return "translate(" + (x/h * radius - 20) +  ',' +
+                 (y/h * radius - 20) +  ")"; 
+              }
+
+              else if (x < 0) {
                 return "translate(" + (x/h * radius - 60) +  ',' +
                  (y/h * radius) +  ")"; 
               }
@@ -343,6 +350,8 @@ function draw(num_checked) {
       all_values.push($(this).val());
     });
 
+    //console.log(all_values)
+
     d3.csv("bed_file.csv", function(error, data) {
 
       data.forEach(function(d) {
@@ -395,6 +404,12 @@ function draw(num_checked) {
                   h = Math.sqrt(x*x + y*y);
 
               if (x < 0) {
+                //console.log("here")
+                return "translate(" + (x/h * radius + 50) +  ',' +
+                 (y/h * radius) +  ")"; 
+              }
+
+              else if (x < 0) {
                 return "translate(" + (x/h * radius - 60) +  ',' +
                  (y/h * radius) +  ")"; 
               }
@@ -405,6 +420,7 @@ function draw(num_checked) {
               }
 
               else {
+                console.log("hello")
                 return "translate(" + (x/h * radius+30) +  ',' +
                  (y/h * radius - 10) +  ")"; 
               }
@@ -490,10 +506,14 @@ function draw(num_checked) {
 
       for (var i = 0; i < num_checked; i++) {
 
+        //console.log(num_checked)
+
+        d3.selectAll(".label_text").remove();
+
         g.append("text")
           .attr("class", "label_text")
           .text(function() {
-            return column_names[i]
+            return all_values[i]
           })
           .attr("x", -63)
           .attr("y", -(radius - (i*100) - 50))
@@ -505,6 +525,8 @@ function draw(num_checked) {
           .attr("y", 25)
           .attr("height", 100)
           .attr("width", 100);
+
+        d3.selectAll(".legend-text").remove();
 
         legend.selectAll(".rect")
         .data(column_names)
@@ -531,6 +553,7 @@ function draw(num_checked) {
             return column_names[i] 
           })
           .attr("font-size", "12px")
+          .attr("class", "legend-text")
           .attr("font-color", "black");
 
       }
