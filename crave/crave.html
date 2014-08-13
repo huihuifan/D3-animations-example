@@ -40,10 +40,6 @@ body {
   text-align: center;
 }
 
-.dropdown {
-  margin: auto;
-}
-
 
 </style>
 <body>
@@ -72,10 +68,7 @@ body {
   <div id="page_content">
     <button type="button" class="btn btn-default btn-sm" id="submit_button">Submit</button>
     <form id="data_form">
-      <input type="checkbox" name="file_pick" value="A" id="A">A<br>
-      <input type="checkbox" name="file_pick" value="B" id="B">B<br>
-      <input type="checkbox" name="file_pick" value="C" id="C">C<br>
-      <input type="checkbox" name="file_pick" value="D" id="D">D<br> 
+    
     </form>
   </div>
 
@@ -111,6 +104,31 @@ $(document).ready(function(){
         dropdown.appendChild(li);
 
       }
+
+    $(".dropdown-menu li a").click( function() {
+      var selected_Text = $(this).text();
+
+      for (var i = 0; i < column_names.length; i++) {
+        if (column_names[i] == selected_Text) {
+          column_names = column_names.splice(i+1,column_names.length-i);
+        }
+      }
+
+      for (var i = 0; i < column_names.length; i++) {
+
+        $("#data_form").append('<input type="checkbox" name="file_pick" value=' + column_names[i] + " id=" + column_names[i] + ">"+ column_names[i] + "<br>")
+
+        console.log('<input type="checkbox" name="file_pick" value=' + column_names[i] + " id=" + column_names[i] + ">"+ column_names[i] + "<br>")
+
+      }
+
+
+      //  <input type="checkbox" name="file_pick" value="A" id="A">A<br>
+      // <input type="checkbox" name="file_pick" value="B" id="B">B<br>
+      // <input type="checkbox" name="file_pick" value="C" id="C">C<br>
+      // <input type="checkbox" name="file_pick" value="D" id="D">D<br> 
+
+    });
 
   })
 
