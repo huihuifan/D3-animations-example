@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
 <style>
+
 
 body {
   font: 10px sans-serif;
@@ -37,26 +40,21 @@ body {
 
 </style>
 <body>
-  
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>  
   <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
   <div id="ac-wrapper">
     <div id="popup">
       <center>
         <h2>Please select a reference, then click submit.</h2>
 
-          <input type="submit" name="submit" value="Submit"/>
-          
           <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-              Select Dataset <span class="caret"></span>
+              Submit <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" id="reference_selection">
             </ul>
-          </div>
-
+        </div>
      
           </select> 
 
@@ -65,7 +63,7 @@ body {
   </div>
 
   <div id="page_content">
-    <button type="button" class="btn btn-default" id="submit_button">Default</button>
+    <button type="button" class="btn btn-default" id="submit_button">Submit</button>
     <form id="data_form">
       <input type="checkbox" name="file_pick" value="A" id="A">A<br>
       <input type="checkbox" name="file_pick" value="B" id="B">B<br>
