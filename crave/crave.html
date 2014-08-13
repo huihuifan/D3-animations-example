@@ -118,10 +118,10 @@ function PopUp(){
   document.getElementById('ac-wrapper').style.display="none"; 
 }
 
+var column_names;
+
 $(document).ready(function(){
     d3.csv("bed_file.csv", function(error, data) {
-
-      var column_names;
 
       data.forEach(function(d) {
         column_names = Object.keys(d)
@@ -179,9 +179,13 @@ var arc = d3.svg.arc()
     .outerRadius(radius - 10)
     .innerRadius(radius - 70);
 
+var degree = Math.PI/180; 
+
 var pie = d3.layout.pie()
-    .sort(null)
-    .value(function(d) { return d.start; });
+  .sort(null)
+  .startAngle(10*degree)
+  .endAngle(350*degree)
+  .value(function(d) { return d.start; });
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
@@ -202,6 +206,8 @@ function draw(num_checked) {
 
   //console.log(num_checked)
 
+  var color_array = ["#d7191c","#fdae61","#ffffbf","#abdda4","#2b83ba"]
+
   d3.selectAll(".arc").remove();
   d3.selectAll(".wedge").remove();
 
@@ -218,6 +224,7 @@ function draw(num_checked) {
     d3.csv("bed_file.csv", function(error, data) {
 
       data.forEach(function(d) {
+
         d.start = +d.start;
         d.overlap = +d.overlap;
         d.A = +d.A;
@@ -226,6 +233,8 @@ function draw(num_checked) {
 
         //console.log(Object.keys(d))
       });
+
+      console.log(data)
 
       var g = svg.selectAll(".arc")
           .data(pie(data))
@@ -238,7 +247,7 @@ function draw(num_checked) {
           .style("fill", function(d) {
             //console.log("here")
             if (d.data.overlap == 1) {
-              return "green";
+              return color_array[0];
             }
             else {
               return "white";
@@ -253,15 +262,28 @@ function draw(num_checked) {
 
         g.append("path")
           .attr("d", inner_arc)
-          .attr("clas", "wedge")
+          .attr("class", "wedge")
           .style("fill", function(d) {
             if (d.data[all_values[i]] == 1) {
-              return "green";
+              return color_array[i];
             }
             else {
               return "white";
             }
+          });
+ 
+      }
+
+      for (var i = 0; i < num_checked; i++) {
+
+        g.append("text")
+          .attr("class", "label_text")
+          .text(function() {
+            return column_names[i]
           })
+          .attr("x", 0)
+          .attr("y", -(radius - (i*100) - 50))
+          .attr("font-size", "12px"); 
       }
 
     });
