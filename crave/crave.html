@@ -236,6 +236,26 @@ function draw(num_checked) {
 
       console.log(data)
 
+      d3.csv("chromo.csv", function(chromosome_data) {
+        chromosome_data.forEach(function(d) {
+          d.start = +d.start;
+        });
+
+        var chromo_arc = d3.svg.arc()
+          .outerRadius(radius + 20)
+          .innerRadius(radius + 10);
+
+        var chromo = svg.selectAll(".chromo_arc")
+          .data(pie(chromosoe_data))
+          .enter().append("g")
+          .attr("class", "chromo_arc");
+
+        chromo.append("path")
+          .attr("d", arc)
+          .style("fill", "black")
+
+      })
+
       var g = svg.selectAll(".arc")
           .data(pie(data))
         .enter().append("g")
