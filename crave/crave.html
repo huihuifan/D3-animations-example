@@ -40,6 +40,17 @@ body {
   text-align: center;
 }
 
+#submit_button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+#data_form {
+  position: absolute;
+  top: 50px;
+  left: 20px;
+}
 
 </style>
 <body>
@@ -67,9 +78,10 @@ body {
 
   <div id="page_content">
     <button type="button" class="btn btn-default btn-sm" id="submit_button">Submit</button>
-    <form id="data_form">
     
+    <form id="data_form">
     </form>
+ 
   </div>
 
 <script>
@@ -118,15 +130,9 @@ $(document).ready(function(){
 
         $("#data_form").append('<input type="checkbox" name="file_pick" value=' + column_names[i] + " id=" + column_names[i] + ">"+ column_names[i] + "<br>")
 
-        console.log('<input type="checkbox" name="file_pick" value=' + column_names[i] + " id=" + column_names[i] + ">"+ column_names[i] + "<br>")
-
       }
 
-
-      //  <input type="checkbox" name="file_pick" value="A" id="A">A<br>
-      // <input type="checkbox" name="file_pick" value="B" id="B">B<br>
-      // <input type="checkbox" name="file_pick" value="C" id="C">C<br>
-      // <input type="checkbox" name="file_pick" value="D" id="D">D<br> 
+      PopUp();
 
     });
 
@@ -136,7 +142,7 @@ $(document).ready(function(){
 
 var width = 1250,
     height = 1100,
-    radius = Math.min(width, height) / 2;
+    radius = Math.min(width, height) / 2.3;
 
 var arc = d3.svg.arc()
     .outerRadius(radius - 10)
@@ -187,7 +193,7 @@ function draw(num_checked) {
         d.B = +d.B;
         d.C = +d.C;
 
-        console.log(Object.keys(d))
+        //console.log(Object.keys(d))
       });
 
       var g = svg.selectAll(".arc")
