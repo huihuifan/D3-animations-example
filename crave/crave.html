@@ -46,24 +46,24 @@ body {
   <div id="ac-wrapper">
     <div id="popup">
       <center>
-        <h2>Please select a reference, then click submit.</h2>
+        <h4>Please select a reference.</h4>
 
-          <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-              Submit <span class="caret"></span>
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown" data-toggle="dropdown">
+              Select
+              <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu" id="reference_selection">
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="reference_selection">
+            
             </ul>
-        </div>
+          </div>
      
-          </select> 
-
       </center>
     </div>
   </div>
 
   <div id="page_content">
-    <button type="button" class="btn btn-default" id="submit_button">Submit</button>
+    <button type="button" class="btn btn-default btn-sm" id="submit_button">Submit</button>
     <form id="data_form">
       <input type="checkbox" name="file_pick" value="A" id="A">A<br>
       <input type="checkbox" name="file_pick" value="B" id="B">B<br>
@@ -91,8 +91,9 @@ $(document).ready(function(){
 
       //console.log(column_names)
 
+
       for (var i = 0; i < column_names.length; i++) {
-        var str = "<li><a href='#'>" + column_names[i] + "</a></li>";
+        var str = "<li role='presentation'><a role='menuitem' tabindex='-1' href='#'>" + column_names[i] + "</a></li>";
 
         $("#reference_selection").append(str);
       }
