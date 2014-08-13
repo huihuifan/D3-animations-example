@@ -163,7 +163,7 @@ function PopUp(){
   document.getElementById('ac-wrapper').style.display="none"; 
 }
 
-var column_names;
+var column_names, selected_Text;
 
 $(document).ready(function(){
 
@@ -195,13 +195,13 @@ $(document).ready(function(){
 
     $(".dropdown-menu li a").click( function() {
 
-      var selected_Text = $(this).text();
+      selected_Text = $(this).text();
 
       $('#return_button').show()
 
       d3.csv("chromo.csv", function(chromosome_data) {
         chromosome_data.forEach(function(d) {
-          d.start = +d.start;
+          d.start = +d.START;
         });
 
         var chromo_arc = d3.svg.arc()
@@ -346,11 +346,12 @@ function draw(num_checked) {
 
       data.forEach(function(d) {
 
-        d.start = +d.start;
-        d.overlap = +d.overlap;
-        d.A = +d.A;
-        d.B = +d.B;
-        d.C = +d.C;
+        d.start = +d.START;
+        d.end = +d.STOP;
+        d.A = +d.EC_BRD4_TNF_peaks;
+        d.B = +d.EC_BRD4_TNF_peaks;
+        d.C = +d.EC_BRD4_CON_peaks;
+        d.chromosome = d.CHROM;
 
         //console.log(Object.keys(d))
       });
@@ -359,7 +360,7 @@ function draw(num_checked) {
 
       d3.csv("chromo.csv", function(chromosome_data) {
         chromosome_data.forEach(function(d) {
-          d.start = +d.start;
+          d.start = +d.START;
         });
 
         var chromo_arc = d3.svg.arc()
@@ -434,7 +435,7 @@ function draw(num_checked) {
           .attr("class", "wedge")
           .style("fill", function(d) {
             //console.log("here")
-            if (d.data.overlap == 1) {
+            if (d.data[selected_Text] == 1) {
               return color_array[0];
             }
             else {
