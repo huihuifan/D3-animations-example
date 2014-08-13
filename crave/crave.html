@@ -84,13 +84,11 @@ $(document).ready(function(){
 
       console.log(column_names)
 
+      for (var i = 0; i < column_names.length; i++) {
+        var str = "<option>" + column_names[i] + "</option>";
 
-    function add(){
-
-      var str="<option>Al-Tobah</option>"
-      $("#surah_selection").append(str);
-    
-    }
+        $("#reference_selection").append(str);
+      }
 
   })
 
