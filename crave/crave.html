@@ -202,6 +202,7 @@ $(document).ready(function(){
       d3.csv("chromo.csv", function(chromosome_data) {
         chromosome_data.forEach(function(d) {
           d.start = +d.START;
+          d.chromosome = d.CHROM;
         });
 
         var chromo_arc = d3.svg.arc()
