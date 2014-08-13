@@ -23,9 +23,10 @@ body {
   z-index: 1001;
 }
 
-#popup{
-  width: 555px;
-  height: 375px;
+#popup {
+  margin: auto;
+  width: 500px;
+  height: 100px;
   background: #FFFFFF;
   border: 5px solid #000;
   border-radius: 25px;
@@ -35,8 +36,14 @@ body {
   -moz-box-shadow: #64686e 0px 0px 3px 3px;
   -webkit-box-shadow: #64686e 0px 0px 3px 3px;
   position: relative;
-  top: 150px; left: 375px;
+  top: 150px; 
+  text-align: center;
 }
+
+.dropdown {
+  margin: auto;
+}
+
 
 </style>
 <body>
@@ -44,23 +51,21 @@ body {
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-
   <div id="ac-wrapper">
     <div id="popup">
-      <center>
-        <h4>Please select a reference.</h4>
 
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown" data-toggle="dropdown">
-              Select
+      <h4>Please select a reference.</h4>
+
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdown" data-toggle="dropdown">
+            Select
               <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="reference_selection">
-            
-            </ul>
-          </div>
-     
-      </center>
+          </button>
+
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="reference_selection" style="margin: auto; left: 160px; position: absolute">
+          </ul>
+        </div>     
+
     </div>
   </div>
 
@@ -91,20 +96,6 @@ $(document).ready(function(){
 
       column_names = column_names.splice(4)
 
-      //console.log(column_names)
-
-
-// var list = document.getElementById("projectSelectorDropdown"); 
-//         for (var i = 0; i < rows; i++){                
-//             var opt = table.getValue(i, 0);  
-//             var li = document.createElement("li");
-//             var link = document.createElement("a");             
-//             var text = document.createTextNode(opt);
-//             link.appendChild(text);
-//             link.href = "#";
-//             li.appendChild(link);
-//             list.appendChild(li);
-//           }
 
       var dropdown = document.getElementById("reference_selection");
 
@@ -120,12 +111,6 @@ $(document).ready(function(){
         dropdown.appendChild(li);
 
       }
-
-      // for (var i = 0; i < column_names.length; i++) {
-      //   var str = "<li role='presentation'><a role='menuitem' tabindex='-1' href='#'>" + column_names[i] + "</a></li>";
-
-      //   $("#reference_selection").append(str);
-      // }
 
   })
 
@@ -186,14 +171,6 @@ function draw(num_checked) {
 
         console.log(Object.keys(d))
       });
-
-
-      function add(){
-
-        var str="<option>Al-Tobah</option>"
-        $("#surah_selection").append(str);
-      
-      }
 
       var g = svg.selectAll(".arc")
           .data(pie(data))
