@@ -452,11 +452,24 @@ function draw(num_checked) {
           .attr("class", "wedge")
           .style("fill", function(d) {
             //console.log("here")
-            if (d.data[selected_Text] == 1) {
-              return color_array[0];
+
+            if (all_values.length == 1) {
+              if (d.data[all_values] == 1) {
+                return color_array[0];
+              }
+              else {
+                return "white";
+              }
             }
+
             else {
-              return "white";
+              if (d.data[all_values[0]] == 1) {
+                return color_array[0];
+              }
+              else {
+                  console.log("here")
+                  return "white";
+              }
             }
           })
           .on("mouseover", function(d) {
@@ -471,13 +484,17 @@ function draw(num_checked) {
 
         var inner_arc = d3.svg.arc()
           .outerRadius(radius - (i*100) - 20)
-          .innerRadius(radius - (i*100) - 80)
+          .innerRadius(radius - (i*100) - 80);
 
         g.append("path")
           .attr("d", inner_arc)
           .attr("class", "wedge")
           .style("fill", function(d) {
+
+            //console.log(all_values)
+
             if (d.data[all_values[i]] == 1) {
+              //console.log("here")
               return color_array[i];
             }
             else {
@@ -513,7 +530,7 @@ function draw(num_checked) {
         g.append("text")
           .attr("class", "label_text")
           .text(function() {
-            console.log(all_values[i])
+            //console.log(all_values[i])
             return all_values[i]
           })
           .attr("x", -63)
